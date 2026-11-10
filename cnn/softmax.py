@@ -11,20 +11,18 @@ class SoftMax:
         self.last_input_shape = input.shape
         self.last_input = input.flatten()
 
-        totals = self.last_input @ self.weights + self.biases
-        shifted = totals - np.max(totals)
-        self.last_log_probs = (shifted - np.log(np.sum(np.exp(shifted))))
-
-        self.last_output = np.exp(self.last_log_probs)
+        totals = self.last_input @ self.weights + self.biases # 10 логитов (z)
+        shifted = totals - np.max(totals) 
+        self.last_log_probs = (shifted - np.log(np.sum(np.exp(shifted)))) 
+        self.last_output = np.exp(self.last_log_probs) #вероятности в сумме 1(возвращает вероятности)
 
         return self.last_output
 
     def backprob(self, label, lr):
-        dl_dt = self.last_output.copy()
-        dl_dt[label] -= 1
+        dl_dt = self.last_output.copy() # начинаем с p_j для всех классов
+        dl_dt[label] -= 1 # -1 по логиту правильного класса
 
         dl_dw = np.outer(self.last_input, dl_dt)
-
         dl_dinput = self.weights @ dl_dt
 
         self.weights -= lr * dl_dw

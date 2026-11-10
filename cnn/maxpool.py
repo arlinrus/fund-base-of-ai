@@ -19,7 +19,7 @@ class MaxPoll:
         return x.reshape(h_2, 2, w_2, 2, f).transpose(0, 2, 4, 1, 3).reshape(h_2, w_2, f, 4)
 
     def backprob(self, dl_dout):
-        h, w, f = self.last_input.shape
+        h, w, f = self.last_input.shape # 28 x 28 x 6
         h_2, w_2  = h //2 , w // 2
 
         # gradients will go to pixel where it were max

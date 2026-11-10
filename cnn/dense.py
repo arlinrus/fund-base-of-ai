@@ -7,7 +7,7 @@ class Dense:
 
     def forward(self, input):
         self.last_input_shape = input.shape
-        self.last_input = input.flatten()
+        self.last_input = input.flatten() # делает массив
 
         totals = self.last_input @ self.weights + self.biases
         self.last_relu_mask = totals > 0
@@ -18,7 +18,7 @@ class Dense:
         # градиент через ReLU
         dl_dt = dl_dout * self.last_relu_mask
 
-        dl_dw = np.outer(self.last_input, dl_dt)
+        dl_dw = np.outer(self.last_input, dl_dt) #внешнее произведение двух веткоров
         dl_dinput = self.weights @ dl_dt
 
         self.weights -= lr * dl_dw
