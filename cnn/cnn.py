@@ -32,7 +32,6 @@ softmax = SoftMax(128, 10)
 tsne_n = 3000
 analysis.plot_tsne(analysis.tsne_2d(test_images[:tsne_n].reshape(tsne_n, -1) / 255), test_labels[:tsne_n], "t-SNE исходных изображений (пиксели), до обучения","tsne_raw.png",)
 
-
 # feed forward
 def forward(image, label):
   image = np.pad(image, ((2, 2), (2, 2)), mode="constant")
@@ -80,7 +79,7 @@ max_epochs = 60
 lr_start = 0.01
 
 for epoch in range(max_epochs):
-  lr = lr_start / (1 + 0.1 * epoch)
+  lr = lr_start / (1 + 0.1 * epoch) 
   print('Epoch %d (lr = %.5f)' % (epoch + 1, lr))
   permutation = np.random.permutation(len(train_images))
   train_images = train_images[permutation]
